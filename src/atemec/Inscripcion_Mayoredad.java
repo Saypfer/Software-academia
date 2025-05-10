@@ -47,6 +47,7 @@ public class Inscripcion_Mayoredad extends javax.swing.JFrame {
         direccion = new javax.swing.JTextField();
         BtnCancelar = new javax.swing.JButton();
         BtnGuardarInscripcion = new javax.swing.JButton();
+        Regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,15 +136,21 @@ public class Inscripcion_Mayoredad extends javax.swing.JFrame {
             }
         });
 
+        Regresar.setBackground(new java.awt.Color(0, 0, 204));
+        Regresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Regresar.setText("REGRESAR");
+        Regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,15 +176,22 @@ public class Inscripcion_Mayoredad extends javax.swing.JFrame {
                                     .addComponent(BtnGuardarInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(BtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(31, 31, 31))))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                                    .addGap(31, 31, 31)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Regresar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Regresar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,7 +275,7 @@ public class Inscripcion_Mayoredad extends javax.swing.JFrame {
  String dire = direccion.getText().trim();
         
         try {
-             String qry = "INSERT INTO Ofertas(id_oferta, id_pedido, precio_unitario, fecha_de_oferta, id_proveedor) VALUES (?, ?, ?,?,?)";
+             String qry = "INSERT INTO Inscripciones(Nombre, Edad, Telefono, Horario, Fecha, Direccion) VALUES (?,?,?,?,?,?)";
             CallableStatement callableStatement = connection.prepareCall(qry);
             callableStatement.setString(1, pnombre);
             callableStatement.setString(2, eda);
@@ -271,13 +285,19 @@ public class Inscripcion_Mayoredad extends javax.swing.JFrame {
             callableStatement.setString(6, dire);
             callableStatement.execute();
 
-            JOptionPane.showMessageDialog(null, "Oferta ingresada con exito!");
+            JOptionPane.showMessageDialog(null, "Alumno Inscrito con exito!");
             limpiarForm();
             connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
         }
     }//GEN-LAST:event_BtnGuardarInscripcionActionPerformed
+
+    private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
+        Mayor_Menor newframe = new Mayor_Menor();
+        newframe.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_RegresarActionPerformed
      private void limpiarForm() {
         nombre.setText("");
         fecha.setText("");
@@ -325,6 +345,7 @@ public class Inscripcion_Mayoredad extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCancelar;
     private javax.swing.JButton BtnGuardarInscripcion;
+    private javax.swing.JButton Regresar;
     private javax.swing.JTextField direccion;
     private javax.swing.JTextField edad;
     private javax.swing.JTextField fecha;

@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
  *
  * @author Rony Tabique
  */
-public class Inscripcion_Menoredad extends javax.swing.JFrame {
+public class Actualizar_Alumno extends javax.swing.JFrame {
 
     /**
-     * Creates new form Inscripcion_Menoredad
+     * Creates new form Actualizar_Alumno
      */
-    public Inscripcion_Menoredad() {
+    public Actualizar_Alumno() {
         initComponents();
     }
 
@@ -46,11 +46,13 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
         parentesco = new javax.swing.JTextField();
         fecha = new javax.swing.JTextField();
         BtnCacncelar = new javax.swing.JButton();
-        AddInscripcion = new javax.swing.JButton();
+        Actualizar = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         edad = new javax.swing.JTextField();
         nombrea = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        id = new javax.swing.JTextField();
         Regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,7 +61,7 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Serif", 0, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Inscripción de Alumnos");
+        jLabel1.setText("Actualizar datos de alumno");
 
         jLabel6.setFont(new java.awt.Font("Serif", 0, 30)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -136,12 +138,12 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
             }
         });
 
-        AddInscripcion.setBackground(new java.awt.Color(0, 204, 51));
-        AddInscripcion.setFont(new java.awt.Font("Serif", 0, 30)); // NOI18N
-        AddInscripcion.setText("INSCRIBIR");
-        AddInscripcion.addActionListener(new java.awt.event.ActionListener() {
+        Actualizar.setBackground(new java.awt.Color(0, 204, 51));
+        Actualizar.setFont(new java.awt.Font("Serif", 0, 30)); // NOI18N
+        Actualizar.setText("ACTUALIZAR");
+        Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddInscripcionActionPerformed(evt);
+                ActualizarActionPerformed(evt);
             }
         });
 
@@ -165,7 +167,18 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Serif", 0, 30)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setText("Nombre del alumno");
+        jLabel13.setText("Nombre de alumno");
+
+        jLabel14.setFont(new java.awt.Font("Serif", 0, 30)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Id de alumno a modificar");
+
+        id.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
+        id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idActionPerformed(evt);
+            }
+        });
 
         Regresar.setBackground(new java.awt.Color(0, 0, 204));
         Regresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -186,37 +199,41 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10))
-                                .addGap(42, 42, 42)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(edad, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(horario, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Regresar))
+                            .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGap(26, 26, 26)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Regresar))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel10))
+                                    .addGap(42, 42, 42)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(edad, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(horario, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel11)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(43, 43, 43)
-                            .addComponent(AddInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(78, 78, 78)
+                            .addComponent(Actualizar)
+                            .addGap(51, 51, 51)
                             .addComponent(BtnCacncelar, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(nombree, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel8))
                     .addComponent(nombrea, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(56, Short.MAX_VALUE))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,6 +243,10 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Regresar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombrea, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,7 +280,7 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
                     .addComponent(horario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AddInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnCacncelar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -302,25 +323,27 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaActionPerformed
 
-    private void edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edadActionPerformed
+    private void BtnCacncelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCacncelarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_edadActionPerformed
+    }//GEN-LAST:event_BtnCacncelarActionPerformed
 
-    private void AddInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddInscripcionActionPerformed
+    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         Conexion con = new Conexion();
         Connection connection = con.establecerConexion();
 
- String pnombre = nombrea.getText().trim();
- String nombreen = nombree.getText().trim();
- String  eda = edad.getText().trim();
- String telefono = tel.getText().trim();
- String horari = horario.getText().trim();
- String fech = fecha.getText().trim();
- String dire = direccion.getText().trim();
- String paren = parentesco.getText().trim();
-        
+        String pnombre = nombrea.getText().trim();
+        String nombreen = nombree.getText().trim();
+        String  eda = edad.getText().trim();
+        String telefono = tel.getText().trim();
+        String horari = horario.getText().trim();
+        String fech = fecha.getText().trim();
+        String dire = direccion.getText().trim();
+        String paren = parentesco.getText().trim();
+        String idStr = id.getText().trim();
+        int id = Integer.parseInt(idStr);
+
         try {
-             String qry = "INSERT INTO Inscripciones(Nombre, Edad, Telefono, Horario, Fecha, Direccion, Nombre_Encargado, Parentesco) VALUES (?,?,?,?,?,?,?,?)";
+            String qry = "UPDATE Inscripciones SET Nombre=?, Edad = ?, Telefono = ?, Horario=?, Fecha=?, Direccion=?, Nombre_Encargado=?, Parentesco=? WHERE IdInscripcion=?";
             CallableStatement callableStatement = connection.prepareCall(qry);
             callableStatement.setString(1, pnombre);
             callableStatement.setString(2, eda);
@@ -330,29 +353,16 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
             callableStatement.setString(6, dire);
             callableStatement.setString(7,  nombreen);
             callableStatement.setString(8, paren);
+            callableStatement.setInt(9, id);
             callableStatement.execute();
 
-            JOptionPane.showMessageDialog(null, "Alumno inscrito con exito!");
+            JOptionPane.showMessageDialog(null, "Datos acutalizados con exito!");
             limpiarForm();
             connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
         }
-    }//GEN-LAST:event_AddInscripcionActionPerformed
-
-    private void BtnCacncelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCacncelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCacncelarActionPerformed
-
-    private void nombreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nombreaActionPerformed
-
-    private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
-        Mayor_Menor newframe = new Mayor_Menor();
-        newframe.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_RegresarActionPerformed
+    }//GEN-LAST:event_ActualizarActionPerformed
      private void limpiarForm() {
         nombrea.setText("");
         nombree.setText("");
@@ -364,6 +374,24 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
         parentesco.setText("");
    
     }
+    private void edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edadActionPerformed
+
+    private void nombreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreaActionPerformed
+
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idActionPerformed
+
+    private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
+        Gestion_Alumnos newframe = new Gestion_Alumnos();
+        newframe.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_RegresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -381,37 +409,39 @@ public class Inscripcion_Menoredad extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Inscripcion_Menoredad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Actualizar_Alumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Inscripcion_Menoredad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Actualizar_Alumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Inscripcion_Menoredad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Actualizar_Alumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inscripcion_Menoredad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Actualizar_Alumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Inscripcion_Menoredad().setVisible(true);
+                new Actualizar_Alumno().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddInscripcion;
+    private javax.swing.JButton Actualizar;
     private javax.swing.JButton BtnCacncelar;
     private javax.swing.JButton Regresar;
     private javax.swing.JTextField direccion;
     private javax.swing.JTextField edad;
     private javax.swing.JTextField fecha;
     private javax.swing.JTextField horario;
+    private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

@@ -13,7 +13,7 @@ import java.sql.DriverManager;
  */
 public class Conexion {
        Connection conexion = null;
-    String usuario = "usuariodb";
+    String usuario = "sa";
     String contraseña = "1234";
     String db = "ATEMEC";
     String ip = "localhost";
