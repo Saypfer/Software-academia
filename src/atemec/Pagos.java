@@ -4,7 +4,16 @@
  */
 package atemec;
 
+import ConexionBD.Conexion;
 import java.awt.CardLayout;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import java.sql.ResultSet;
 
 /**
  *
@@ -12,15 +21,18 @@ import java.awt.CardLayout;
  */
 public class Pagos extends javax.swing.JFrame {
 
+    PreparedStatement ps = null;
+    Conexion con = new Conexion();
+    Connection connection = null;
     /**
      * Creates new form Pagos
      */
     public Pagos() {
         initComponents();
-        CardLayout cardLayout = (CardLayout) PanelContenedor.getLayout();
-        PanelContenedor.add(P_inscripcion, "inscripcion");
-        PanelContenedor.add(P_mensualidad, "mensualidad");
-        PanelContenedor.add(P_uniforme, "uniforme");
+        CamposPagos();
+        VerificarFecha(txtfechaInscripcion);
+        VerificarFecha(txtfechaMensualidad);
+        VerificarFecha(txtfechaUniforme);
     }
 
     /**
@@ -39,47 +51,59 @@ public class Pagos extends javax.swing.JFrame {
         PanelContenedor = new javax.swing.JPanel();
         P_inscripcion = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtnombre = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtconcepto = new javax.swing.JTextArea();
+        txtnombreInscripcion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtmonto = new javax.swing.JTextField();
+        txtmontoInscripcion = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtfecha = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        txtfechaInscripcion = new javax.swing.JTextField();
+        btnCancelarInscripcion = new javax.swing.JButton();
+        btnPagarInscripcion = new javax.swing.JButton();
+        btnImprimirInscripcion = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txtNoFacturaIns = new javax.swing.JTextField();
+        jSeparator7 = new javax.swing.JSeparator();
+        jSeparator8 = new javax.swing.JSeparator();
+        jSeparator9 = new javax.swing.JSeparator();
+        txtCarnetIns = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        btnNuevo = new javax.swing.JButton();
         P_mensualidad = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtnombreMensualidad = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtmesMensualidad = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtmontoMensualidad = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        txtfechaMensualidad = new javax.swing.JTextField();
+        btnPagarMensualidad = new javax.swing.JButton();
+        btnCancelarMensualidad = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        txtNoFacturaMen = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
+        jSeparator10 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        txtCarnetBuscar = new javax.swing.JTextField();
+        btnValidarMen = new javax.swing.JButton();
         P_uniforme = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        txtnombreUniforme = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtTalla = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txtmontoUniforme = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        txtfechaUniforme = new javax.swing.JTextField();
+        btnPagarUniforme = new javax.swing.JButton();
+        btnCancelarUniforme = new javax.swing.JButton();
+        txtNoFacturaUni = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,104 +159,126 @@ public class Pagos extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre");
 
-        jLabel4.setText("Concepto");
-
-        txtconcepto.setColumns(20);
-        txtconcepto.setRows(5);
-        jScrollPane1.setViewportView(txtconcepto);
-
         jLabel5.setText("Monto");
 
         jLabel6.setText("Fecha de emision");
 
-        jButton1.setText("Limpiar");
+        btnCancelarInscripcion.setText("Cancelar");
+        btnCancelarInscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarInscripcionActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Guardar");
+        btnPagarInscripcion.setText("Pagar");
+        btnPagarInscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarInscripcionActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Modificar");
+        btnImprimirInscripcion.setText("Imprimir factura");
 
-        jButton4.setText("Eliminar");
+        jLabel7.setText("No. Factura");
 
-        jButton5.setText("Imprimir factura");
+        jLabel4.setText("Carnet");
+
+        btnNuevo.setText("Nueva Inscripcion");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout P_inscripcionLayout = new javax.swing.GroupLayout(P_inscripcion);
         P_inscripcion.setLayout(P_inscripcionLayout);
         P_inscripcionLayout.setHorizontalGroup(
             P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_inscripcionLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCancelarInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnPagarInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnImprimirInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
+            .addGroup(P_inscripcionLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(P_inscripcionLayout.createSequentialGroup()
-                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(P_inscripcionLayout.createSequentialGroup()
-                                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtmonto, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton4)
-                                    .addGroup(P_inscripcionLayout.createSequentialGroup()
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton2)))))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73)
+                        .addComponent(txtmontoInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(P_inscripcionLayout.createSequentialGroup()
-                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(P_inscripcionLayout.createSequentialGroup()
-                                .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(261, 261, 261)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jSeparator9, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator8, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(P_inscripcionLayout.createSequentialGroup()
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtfechaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(84, 84, 84)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtNoFacturaIns, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(P_inscripcionLayout.createSequentialGroup()
+                                    .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtnombreInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(84, 84, 84)
+                                    .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtCarnetIns, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(69, 69, Short.MAX_VALUE))))
         );
         P_inscripcionLayout.setVerticalGroup(
             P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_inscripcionLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(31, 31, 31)
+                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtfechaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtNoFacturaIns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
                 .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtmonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(jLabel4))
+                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(P_inscripcionLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtnombreInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCarnetIns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(98, 98, 98)
+                        .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCancelarInscripcion)
+                            .addComponent(btnPagarInscripcion)
+                            .addComponent(btnImprimirInscripcion)
+                            .addComponent(btnNuevo))
+                        .addContainerGap(34, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_inscripcionLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtmontoInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(138, 138, 138))))
         );
 
         PanelContenedor.add(P_inscripcion, "card2");
 
         jLabel2.setText("Nombre");
-
-        jLabel7.setText("Concepto");
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
 
         jLabel8.setText("Mes");
 
@@ -240,152 +286,239 @@ public class Pagos extends javax.swing.JFrame {
 
         jLabel11.setText("Fecha de emision");
 
-        jButton6.setText("Pagar");
+        btnPagarMensualidad.setText("Pagar");
+        btnPagarMensualidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarMensualidadActionPerformed(evt);
+            }
+        });
 
-        jButton7.setText("Cancelar");
+        btnCancelarMensualidad.setText("Cancelar");
+        btnCancelarMensualidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarMensualidadActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("No. Factura");
+
+        jButton1.setText("Cancelar pago");
+
+        jLabel9.setText("Ingresar Carnet");
+
+        btnValidarMen.setText("Validar");
+        btnValidarMen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValidarMenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout P_mensualidadLayout = new javax.swing.GroupLayout(P_mensualidad);
         P_mensualidad.setLayout(P_mensualidadLayout);
         P_mensualidadLayout.setHorizontalGroup(
             P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_mensualidadLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(P_mensualidadLayout.createSequentialGroup()
+                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_mensualidadLayout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(P_mensualidadLayout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtfechaMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNoFacturaMen, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_mensualidadLayout.createSequentialGroup()
+                                .addGap(75, 75, 75)
+                                .addComponent(btnPagarMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(btnCancelarMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jSeparator10, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(1, 1, 1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_mensualidadLayout.createSequentialGroup()
+                        .addGap(75, 75, 75)
                         .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44)
-                        .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(71, 71, 71))
-                    .addGroup(P_mensualidadLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(204, 204, 204))))
-            .addGroup(P_mensualidadLayout.createSequentialGroup()
-                .addGap(186, 186, 186)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 204, Short.MAX_VALUE))
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_mensualidadLayout.createSequentialGroup()
+                                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtnombreMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(P_mensualidadLayout.createSequentialGroup()
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtmontoMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtmesMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jSeparator4)
+                            .addGroup(P_mensualidadLayout.createSequentialGroup()
+                                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(P_mensualidadLayout.createSequentialGroup()
+                                        .addGap(231, 231, 231)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(P_mensualidadLayout.createSequentialGroup()
+                                        .addGap(131, 131, 131)
+                                        .addComponent(txtCarnetBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(46, 46, 46)
+                                        .addComponent(btnValidarMen, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(70, 70, 70))
         );
         P_mensualidadLayout.setVerticalGroup(
             P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_mensualidadLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(22, 22, 22)
+                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtfechaMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel15)
+                    .addComponent(txtNoFacturaMen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCarnetBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnValidarMen))
+                .addGap(24, 24, 24)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnombreMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtmesMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                    .addComponent(txtmontoMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(P_mensualidadLayout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(42, 42, 42)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
                 .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(btnCancelarMensualidad)
+                    .addComponent(jButton1)
+                    .addComponent(btnPagarMensualidad))
+                .addGap(26, 26, 26))
         );
 
         PanelContenedor.add(P_mensualidad, "card3");
 
         jLabel3.setText("Nombre");
 
-        jLabel9.setText("Concepto");
+        jLabel12.setText("Talla");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
-
-        jLabel12.setText("Mes");
+        txtTalla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTallaActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Monto");
 
         jLabel14.setText("Fecha de emision");
 
-        jButton8.setText("Pagar");
+        btnPagarUniforme.setText("Pagar");
+        btnPagarUniforme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarUniformeActionPerformed(evt);
+            }
+        });
 
-        jButton9.setText("Cancelar");
+        btnCancelarUniforme.setText("Cancelar");
+        btnCancelarUniforme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarUniformeActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("No. Factura");
 
         javax.swing.GroupLayout P_uniformeLayout = new javax.swing.GroupLayout(P_uniforme);
         P_uniforme.setLayout(P_uniformeLayout);
         P_uniformeLayout.setHorizontalGroup(
             P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_uniformeLayout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6)
-                    .addComponent(jTextField7)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
-                .addGap(68, 68, 68))
             .addGroup(P_uniformeLayout.createSequentialGroup()
-                .addGap(181, 181, 181)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(120, 120, 120)
+                .addComponent(btnCancelarUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnPagarUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(142, 142, 142))
+            .addGroup(P_uniformeLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(P_uniformeLayout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtmontoUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_uniformeLayout.createSequentialGroup()
+                        .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(P_uniformeLayout.createSequentialGroup()
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtfechaUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNoFacturaUni, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(P_uniformeLayout.createSequentialGroup()
+                                .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtnombreUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTalla, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(54, 54, 54))))
         );
         P_uniformeLayout.setVerticalGroup(
             P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_uniformeLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(41, 41, 41)
+                .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNoFacturaUni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel14)
+                    .addComponent(txtfechaUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtnombreUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTalla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
                 .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(P_uniformeLayout.createSequentialGroup()
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtmontoUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton8)
-                    .addComponent(jButton9))
-                .addGap(39, 39, 39))
+                    .addComponent(btnCancelarUniforme)
+                    .addComponent(btnPagarUniforme))
+                .addGap(49, 49, 49))
         );
 
         PanelContenedor.add(P_uniforme, "card4");
@@ -396,9 +529,9 @@ public class Pagos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(PanelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -432,6 +565,263 @@ public class Pagos extends javax.swing.JFrame {
         cl.show(PanelContenedor, "uniforme");
     }//GEN-LAST:event_btnUniformeActionPerformed
 
+    private void btnPagarInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarInscripcionActionPerformed
+        // TODO add your handling code here:
+        
+        //guarda la fecha y lo combierte a formato date para poder insertarlo a la base de datos
+        String fechaTexto = txtfechaInscripcion.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaLocal = LocalDate.parse(fechaTexto, formatter);
+        java.sql.Date fecha = java.sql.Date.valueOf(fechaLocal);
+
+        //Conexion con = new Conexion();
+        connection = con.establecerConexion();
+
+        String Nombre = txtnombreInscripcion.getText().trim();
+        int CarnetIns = Integer.parseInt(txtCarnetIns.getText().trim());
+        double Monto = Double.parseDouble(txtmontoInscripcion.getText().trim());
+        int NoFactura = Integer.parseInt(txtNoFacturaIns.getText().trim());
+        String Concepto = "Inscripcion";
+
+        try {
+            String qry = "INSERT INTO PagosIncripcion (Carnet, Nombre, Monto, Fecha, NoFacturaInscripcion, Concepto) VALUES (?, ?, ?, ?, ?, ?)";
+            ps = connection.prepareStatement(qry);
+            ps.setInt(1, CarnetIns);
+            ps.setString(2, Nombre);
+            ps.setDouble(3, Monto);
+            ps.setDate(4, fecha);
+            ps.setInt(5, NoFactura);
+            ps.setString(6, Concepto);
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Pago realizado");
+            connection.close();
+            limpiarFormInscripcion();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
+        }
+    }//GEN-LAST:event_btnPagarInscripcionActionPerformed
+
+    private void btnCancelarInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarInscripcionActionPerformed
+        // TODO add your handling code here:
+        limpiarFormInscripcion();
+    }//GEN-LAST:event_btnCancelarInscripcionActionPerformed
+
+    private void btnPagarMensualidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarMensualidadActionPerformed
+        // TODO add your handling code here:
+        String fechaTexto = txtfechaMensualidad.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaLocal = LocalDate.parse(fechaTexto, formatter);
+        java.sql.Date Fecha = java.sql.Date.valueOf(fechaLocal);
+
+        //Conexion con = new Conexion();
+        connection = con.establecerConexion();
+
+        String Nombre = txtnombreMensualidad.getText().trim();
+        double Monto = Double.parseDouble(txtmontoMensualidad.getText().trim());
+        String Mes = txtmesMensualidad.getText().trim();
+        int NoFactura = Integer.parseInt(txtNoFacturaMen.getText().trim());
+        int carnet = Integer.parseInt(txtCarnetBuscar.getText().trim());
+        String Concepto = "Mensualidad";
+
+        try {
+            String qry = "INSERT INTO PagosMensualidad (NoFacturaMensualidad, Carnet, Nombre, Monto, Mes, Fecha, Concepto) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            ps = connection.prepareStatement(qry);
+            ps.setInt(1, NoFactura);
+            ps.setInt(2, carnet);
+            ps.setString(3, Nombre);
+            ps.setDouble(4, Monto);
+            ps.setString(5, Mes);
+            ps.setDate(6, Fecha);
+            ps.setString(7, Concepto);
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Pago realizado");
+            connection.close();
+            limpiarFormMensualidad();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
+        }
+    }//GEN-LAST:event_btnPagarMensualidadActionPerformed
+
+    private void btnCancelarMensualidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarMensualidadActionPerformed
+        // TODO add your handling code here:
+        limpiarFormMensualidad();
+    }//GEN-LAST:event_btnCancelarMensualidadActionPerformed
+
+    private void btnPagarUniformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarUniformeActionPerformed
+        // TODO add your handling code here:
+        String fechaTexto = txtfechaUniforme.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaLocal = LocalDate.parse(fechaTexto, formatter);
+        java.sql.Date fecha = java.sql.Date.valueOf(fechaLocal);
+
+        //Conexion con = new Conexion();
+        connection = con.establecerConexion();
+
+        String Nombre = txtnombreUniforme.getText().trim();
+        double Monto = Double.parseDouble(txtmontoUniforme.getText().trim());
+        String Talla = txtTalla.getText().trim();
+        int NoFactura = Integer.parseInt(txtNoFacturaUni.getText().trim());
+        String Concepto = "Uniforme";
+
+        try {
+            String qry = "INSERT INTO Pagos (Nombre, Monto, Talla, Fecha, NoFacturaUniforme, Concepto) VALUES (?, ?, ?, ?, ?, ?)";
+            ps = connection.prepareStatement(qry);
+            ps.setString(1, Nombre);
+            ps.setDouble(2, Monto);
+            ps.setString(3, Talla);
+            ps.setDate(4, fecha);
+            ps.setInt(5, NoFactura);
+            ps.setString(6, Concepto);
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Pago realizado");
+            connection.close();
+            limpiarFormUniforme();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
+        }
+    }//GEN-LAST:event_btnPagarUniformeActionPerformed
+
+    private void btnCancelarUniformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarUniformeActionPerformed
+        // TODO add your handling code here:
+        limpiarFormUniforme();
+    }//GEN-LAST:event_btnCancelarUniformeActionPerformed
+
+    private void txtTallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTallaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTallaActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        connection = con.establecerConexion();
+        int carnet = 0;
+        String CarnetTexto;
+        int CarnetNuevo = 0;
+        int NoFactura = 0;
+        int NoFacturaNuevo = 0;
+        String NoFacturaTexto;
+        try {
+            String qry = "SELECT TOP 1 Carnet, NoFacturaInscripcion FROM PagosIncripcion ORDER BY Carnet DESC";
+            ps = connection.prepareStatement(qry);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                carnet = rs.getInt("Carnet"); // Aquí se guarda el último carnet
+                CarnetNuevo = carnet + 1;
+                CarnetTexto = String.valueOf(CarnetNuevo);
+                txtCarnetIns.setText(CarnetTexto); // Lo mostramos en el JTextField
+                NoFactura = rs.getInt("NoFacturaInscripcion");
+                NoFacturaNuevo = NoFactura + 1;
+                NoFacturaTexto = String.valueOf(NoFacturaNuevo);
+                txtNoFacturaIns.setText(NoFacturaTexto);
+            }
+
+            rs.close();
+            ps.close();
+            connection.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
+        }
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnValidarMenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarMenActionPerformed
+        // TODO add your handling code here:
+        
+        connection = con.establecerConexion();
+        int carnet = Integer.parseInt(txtCarnetBuscar.getText().trim());
+        String nombre;
+        try {
+            String qry = "select Nombre from PagosIncripcion where Carnet = ?";
+            ps = connection.prepareStatement(qry);
+            ps.setInt(1, carnet);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                nombre = rs.getString("Nombre"); // Aquí se guarda el último carnet
+                txtnombreMensualidad.setText(nombre);
+            }
+
+            rs.close();
+            ps.close();
+            connection.close();
+            NoFactura();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
+        }
+        
+    }//GEN-LAST:event_btnValidarMenActionPerformed
+
+    private void CamposPagos(){
+        CardLayout cardLayout = (CardLayout) PanelContenedor.getLayout();
+        PanelContenedor.add(P_inscripcion, "inscripcion");
+        PanelContenedor.add(P_mensualidad, "mensualidad");
+        PanelContenedor.add(P_uniforme, "uniforme");
+    }
+    
+    private void limpiarFormInscripcion() {
+        txtnombreInscripcion.setText("");
+        txtmontoInscripcion.setText("");
+        txtNoFacturaIns.setText("");
+        txtCarnetIns.setText("");
+        txtfechaInscripcion.setText("");
+        VerificarFecha(txtfechaInscripcion);
+    }
+    
+    private void limpiarFormMensualidad() {
+        txtnombreMensualidad.setText("");
+        txtmontoMensualidad.setText("");
+        txtNoFacturaMen.setText("");
+        txtfechaMensualidad.setText("");
+        txtmesMensualidad.setText("");
+        VerificarFecha(txtfechaMensualidad);
+    }
+    
+    private void limpiarFormUniforme() {
+        txtnombreUniforme.setText("");
+        txtmontoUniforme.setText("");
+        txtNoFacturaUni.setText("");
+        txtfechaUniforme.setText("");
+        txtTalla.setText("");
+        VerificarFecha(txtfechaUniforme);
+    }
+    
+    private void VerificarFecha(JTextField campoFecha){
+        if (campoFecha.getText().isEmpty()) {
+            LocalDate fechaActual = LocalDate.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String fechaFormateada = fechaActual.format(formato);
+            campoFecha.setText(fechaFormateada);
+        }
+    }
+    
+    private void NoFactura(){
+        connection = con.establecerConexion();
+        int NoFactura = 0;
+        int NoFacturaNuevo = 0;
+        String NoFacturaTexto;
+        try {
+            String qry = "SELECT TOP 1 NoFacturaMensualidad FROM PagosMensualidad ORDER BY NoFacturaMensualidad DESC";
+            ps = connection.prepareStatement(qry);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                NoFactura = rs.getInt("NoFacturaMensualidad");
+                NoFacturaNuevo = NoFactura + 1;
+                NoFacturaTexto = String.valueOf(NoFacturaNuevo);
+                txtNoFacturaMen.setText(NoFacturaTexto);
+            }
+
+            rs.close();
+            ps.close();
+            connection.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -472,24 +862,27 @@ public class Pagos extends javax.swing.JFrame {
     private javax.swing.JPanel P_mensualidad;
     private javax.swing.JPanel P_uniforme;
     private javax.swing.JPanel PanelContenedor;
+    private javax.swing.JButton btnCancelarInscripcion;
+    private javax.swing.JButton btnCancelarMensualidad;
+    private javax.swing.JButton btnCancelarUniforme;
+    private javax.swing.JButton btnImprimirInscripcion;
     private javax.swing.JButton btnInscripcion;
     private javax.swing.JButton btnMensualidad;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnPagarInscripcion;
+    private javax.swing.JButton btnPagarMensualidad;
+    private javax.swing.JButton btnPagarUniforme;
     private javax.swing.JButton btnUniforme;
+    private javax.swing.JButton btnValidarMen;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -499,22 +892,31 @@ public class Pagos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextArea txtconcepto;
-    private javax.swing.JTextField txtfecha;
-    private javax.swing.JTextField txtmonto;
-    private javax.swing.JTextField txtnombre;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JTextField txtCarnetBuscar;
+    private javax.swing.JTextField txtCarnetIns;
+    private javax.swing.JTextField txtNoFacturaIns;
+    private javax.swing.JTextField txtNoFacturaMen;
+    private javax.swing.JTextField txtNoFacturaUni;
+    private javax.swing.JTextField txtTalla;
+    private javax.swing.JTextField txtfechaInscripcion;
+    private javax.swing.JTextField txtfechaMensualidad;
+    private javax.swing.JTextField txtfechaUniforme;
+    private javax.swing.JTextField txtmesMensualidad;
+    private javax.swing.JTextField txtmontoInscripcion;
+    private javax.swing.JTextField txtmontoMensualidad;
+    private javax.swing.JTextField txtmontoUniforme;
+    private javax.swing.JTextField txtnombreInscripcion;
+    private javax.swing.JTextField txtnombreMensualidad;
+    private javax.swing.JTextField txtnombreUniforme;
     // End of variables declaration//GEN-END:variables
 }
