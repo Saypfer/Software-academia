@@ -19,7 +19,7 @@ import java.sql.ResultSet;
  *
  * @author jhona
  */
-public class Pagos extends javax.swing.JFrame {
+public class Pagos extends javax.swing.JInternalFrame {
 
     PreparedStatement ps = null;
     Conexion con = new Conexion();
@@ -28,6 +28,7 @@ public class Pagos extends javax.swing.JFrame {
      * Creates new form Pagos
      */
     public Pagos() {
+        super("Pagos", true, true, true, true);
         initComponents();
         CamposPagos();
         VerificarFecha(txtfechaInscripcion);
@@ -70,8 +71,6 @@ public class Pagos extends javax.swing.JFrame {
         P_mensualidad = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtnombreMensualidad = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtmesMensualidad = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtmontoMensualidad = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -80,14 +79,29 @@ public class Pagos extends javax.swing.JFrame {
         btnCancelarMensualidad = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         txtNoFacturaMen = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnCancelarPagoMen = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator10 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         txtCarnetBuscar = new javax.swing.JTextField();
         btnValidarMen = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        btnMesEnero = new javax.swing.JButton();
+        btnMesFebrero = new javax.swing.JButton();
+        btnMesMarzo = new javax.swing.JButton();
+        btnMesAbril = new javax.swing.JButton();
+        btnMesMayo = new javax.swing.JButton();
+        btnMesJunio = new javax.swing.JButton();
+        btnMesJulio = new javax.swing.JButton();
+        btnMesAgosto = new javax.swing.JButton();
+        btnMesSeptiembre = new javax.swing.JButton();
+        btnMesOctubre = new javax.swing.JButton();
+        btnMesNoviembre = new javax.swing.JButton();
+        btnMesDiciembre = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtMesMensualidad = new javax.swing.JTextArea();
+        btnQuitarMes = new javax.swing.JButton();
         P_uniforme = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtnombreUniforme = new javax.swing.JTextField();
@@ -104,8 +118,9 @@ public class Pagos extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        btnNuevoUniforme = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("TIPOS DE PAGOS"));
 
@@ -137,25 +152,30 @@ public class Pagos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addComponent(btnInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73)
+                .addGap(79, 79, 79)
                 .addComponent(btnUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(78, 78, 78))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnUniforme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         PanelContenedor.setLayout(new java.awt.CardLayout());
+
+        P_inscripcion.setBorder(javax.swing.BorderFactory.createTitledBorder("Inscripcion"));
 
         jLabel1.setText("Nombre");
 
@@ -207,34 +227,32 @@ public class Pagos extends javax.swing.JFrame {
             .addGroup(P_inscripcionLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jSeparator9, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(P_inscripcionLayout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtfechaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(84, 84, 84)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNoFacturaIns, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(P_inscripcionLayout.createSequentialGroup()
+                                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtnombreInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(84, 84, 84)
+                                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCarnetIns, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(P_inscripcionLayout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73)
-                        .addComponent(txtmontoInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(P_inscripcionLayout.createSequentialGroup()
-                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jSeparator9, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(P_inscripcionLayout.createSequentialGroup()
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtfechaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(84, 84, 84)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtNoFacturaIns, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(P_inscripcionLayout.createSequentialGroup()
-                                    .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtnombreInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(84, 84, 84)
-                                    .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtCarnetIns, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(69, 69, Short.MAX_VALUE))))
+                        .addGap(37, 37, 37)
+                        .addComponent(txtmontoInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         P_inscripcionLayout.setVerticalGroup(
             P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,36 +269,32 @@ public class Pagos extends javax.swing.JFrame {
                 .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(P_inscripcionLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtnombreInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCarnetIns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
-                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(98, 98, 98)
-                        .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCancelarInscripcion)
-                            .addComponent(btnPagarInscripcion)
-                            .addComponent(btnImprimirInscripcion)
-                            .addComponent(btnNuevo))
-                        .addContainerGap(34, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_inscripcionLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtmontoInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(138, 138, 138))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtnombreInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCarnetIns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtmontoInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addGroup(P_inscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelarInscripcion)
+                    .addComponent(btnPagarInscripcion)
+                    .addComponent(btnImprimirInscripcion)
+                    .addComponent(btnNuevo))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         PanelContenedor.add(P_inscripcion, "card2");
 
-        jLabel2.setText("Nombre");
+        P_mensualidad.setBorder(javax.swing.BorderFactory.createTitledBorder("Mensualidad"));
 
-        jLabel8.setText("Mes");
+        jLabel2.setText("Nombre");
 
         jLabel10.setText("Monto");
 
@@ -302,7 +316,12 @@ public class Pagos extends javax.swing.JFrame {
 
         jLabel15.setText("No. Factura");
 
-        jButton1.setText("Cancelar pago");
+        btnCancelarPagoMen.setText("Cancelar pago");
+        btnCancelarPagoMen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarPagoMenActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Ingresar Carnet");
 
@@ -313,21 +332,191 @@ public class Pagos extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Meses"));
+
+        btnMesEnero.setText("Enero");
+        btnMesEnero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesEneroActionPerformed(evt);
+            }
+        });
+
+        btnMesFebrero.setText("Febrero");
+        btnMesFebrero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesFebreroActionPerformed(evt);
+            }
+        });
+
+        btnMesMarzo.setText("Marzo");
+        btnMesMarzo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesMarzoActionPerformed(evt);
+            }
+        });
+
+        btnMesAbril.setText("Abril");
+        btnMesAbril.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesAbrilActionPerformed(evt);
+            }
+        });
+
+        btnMesMayo.setText("Mayo");
+        btnMesMayo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesMayoActionPerformed(evt);
+            }
+        });
+
+        btnMesJunio.setText("Junio");
+        btnMesJunio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesJunioActionPerformed(evt);
+            }
+        });
+
+        btnMesJulio.setText("Julio");
+        btnMesJulio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesJulioActionPerformed(evt);
+            }
+        });
+
+        btnMesAgosto.setText("Agosto");
+        btnMesAgosto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesAgostoActionPerformed(evt);
+            }
+        });
+
+        btnMesSeptiembre.setText("Septiembre");
+        btnMesSeptiembre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesSeptiembreActionPerformed(evt);
+            }
+        });
+
+        btnMesOctubre.setText("Octubre");
+        btnMesOctubre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesOctubreActionPerformed(evt);
+            }
+        });
+
+        btnMesNoviembre.setText("Noviembre");
+        btnMesNoviembre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesNoviembreActionPerformed(evt);
+            }
+        });
+
+        btnMesDiciembre.setText("Diciembre");
+        btnMesDiciembre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesDiciembreActionPerformed(evt);
+            }
+        });
+
+        txtMesMensualidad.setColumns(20);
+        txtMesMensualidad.setRows(5);
+        jScrollPane1.setViewportView(txtMesMensualidad);
+
+        btnQuitarMes.setText("Quitar mes");
+        btnQuitarMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarMesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnMesEnero, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMesMayo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMesSeptiembre, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnMesJunio, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addComponent(btnMesFebrero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMesOctubre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnMesNoviembre, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addComponent(btnMesJulio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMesMarzo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnMesAbril, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMesAgosto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMesDiciembre, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(btnQuitarMes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnQuitarMes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnMesEnero, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnMesFebrero, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnMesMarzo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnMesAbril, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnMesMayo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnMesJunio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnMesJulio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnMesAgosto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnMesOctubre, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                                    .addComponent(btnMesSeptiembre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnMesDiciembre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnMesNoviembre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(15, 15, 15))))
+        );
+
         javax.swing.GroupLayout P_mensualidadLayout = new javax.swing.GroupLayout(P_mensualidad);
         P_mensualidad.setLayout(P_mensualidadLayout);
         P_mensualidadLayout.setHorizontalGroup(
             P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_mensualidadLayout.createSequentialGroup()
-                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_mensualidadLayout.createSequentialGroup()
-                        .addGap(74, 74, 74)
+            .addGroup(P_mensualidadLayout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addComponent(txtCarnetBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addComponent(btnValidarMen, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(P_mensualidadLayout.createSequentialGroup()
+                .addGap(74, 74, 74)
+                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(P_mensualidadLayout.createSequentialGroup()
                         .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(P_mensualidadLayout.createSequentialGroup()
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtfechaMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtNoFacturaMen, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -337,39 +526,32 @@ public class Pagos extends javax.swing.JFrame {
                                 .addGap(41, 41, 41)
                                 .addComponent(btnCancelarMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(35, 35, 35)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCancelarPagoMen, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jSeparator10, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(1, 1, 1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_mensualidadLayout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_mensualidadLayout.createSequentialGroup()
-                                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtnombreMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(P_mensualidadLayout.createSequentialGroup()
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtmontoMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtmesMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jSeparator4)
-                            .addGroup(P_mensualidadLayout.createSequentialGroup()
-                                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(P_mensualidadLayout.createSequentialGroup()
-                                        .addGap(231, 231, 231)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(P_mensualidadLayout.createSequentialGroup()
-                                        .addGap(131, 131, 131)
-                                        .addComponent(txtCarnetBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(46, 46, 46)
-                                        .addComponent(btnValidarMen, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(70, 70, 70))
+                            .addComponent(jSeparator10, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator4))
+                        .addGap(71, 71, 71))
+                    .addGroup(P_mensualidadLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(txtnombreMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(P_mensualidadLayout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(P_mensualidadLayout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_mensualidadLayout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtmontoMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_mensualidadLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
         P_mensualidadLayout.setVerticalGroup(
             P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,22 +566,18 @@ public class Pagos extends javax.swing.JFrame {
                 .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCarnetBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnValidarMen))
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtnombreMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtmesMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnombreMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtmontoMensualidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -409,12 +587,14 @@ public class Pagos extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(P_mensualidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelarMensualidad)
-                    .addComponent(jButton1)
+                    .addComponent(btnCancelarPagoMen)
                     .addComponent(btnPagarMensualidad))
                 .addGap(26, 26, 26))
         );
 
         PanelContenedor.add(P_mensualidad, "card3");
+
+        P_uniforme.setBorder(javax.swing.BorderFactory.createTitledBorder("Uniforme"));
 
         jLabel3.setText("Nombre");
 
@@ -446,6 +626,8 @@ public class Pagos extends javax.swing.JFrame {
 
         jLabel16.setText("No. Factura");
 
+        btnNuevoUniforme.setText("Nuevo Uniforme");
+
         javax.swing.GroupLayout P_uniformeLayout = new javax.swing.GroupLayout(P_uniforme);
         P_uniforme.setLayout(P_uniformeLayout);
         P_uniformeLayout.setHorizontalGroup(
@@ -454,6 +636,8 @@ public class Pagos extends javax.swing.JFrame {
                 .addGap(120, 120, 120)
                 .addComponent(btnCancelarUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNuevoUniforme)
+                .addGap(48, 48, 48)
                 .addComponent(btnPagarUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(142, 142, 142))
             .addGroup(P_uniformeLayout.createSequentialGroup()
@@ -473,7 +657,7 @@ public class Pagos extends javax.swing.JFrame {
                                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtfechaUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtNoFacturaUni, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -512,12 +696,13 @@ public class Pagos extends javax.swing.JFrame {
                 .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(txtmontoUniforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(P_uniformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelarUniforme)
-                    .addComponent(btnPagarUniforme))
+                    .addComponent(btnPagarUniforme)
+                    .addComponent(btnNuevoUniforme))
                 .addGap(49, 49, 49))
         );
 
@@ -619,7 +804,7 @@ public class Pagos extends javax.swing.JFrame {
 
         String Nombre = txtnombreMensualidad.getText().trim();
         double Monto = Double.parseDouble(txtmontoMensualidad.getText().trim());
-        String Mes = txtmesMensualidad.getText().trim();
+        String Mes = txtMesMensualidad.getText().trim();
         int NoFactura = Integer.parseInt(txtNoFacturaMen.getText().trim());
         int carnet = Integer.parseInt(txtCarnetBuscar.getText().trim());
         String Concepto = "Mensualidad";
@@ -702,6 +887,8 @@ public class Pagos extends javax.swing.JFrame {
         int NoFactura = 0;
         int NoFacturaNuevo = 0;
         String NoFacturaTexto;
+        int Monto;
+        String MontoTexto;
         try {
             String qry = "SELECT TOP 1 Carnet, NoFacturaInscripcion FROM PagosIncripcion ORDER BY Carnet DESC";
             ps = connection.prepareStatement(qry);
@@ -721,6 +908,8 @@ public class Pagos extends javax.swing.JFrame {
             rs.close();
             ps.close();
             connection.close();
+            
+            GestionPagos("Inscripcion", txtmontoInscripcion);
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
@@ -742,6 +931,8 @@ public class Pagos extends javax.swing.JFrame {
             if (rs.next()) {
                 nombre = rs.getString("Nombre"); // Aquí se guarda el último carnet
                 txtnombreMensualidad.setText(nombre);
+            } else {
+                JOptionPane.showMessageDialog(null, "Alumno no Inscrito");
             }
 
             rs.close();
@@ -753,6 +944,109 @@ public class Pagos extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnValidarMenActionPerformed
+
+    private void btnMesEneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesEneroActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Enero");
+    }//GEN-LAST:event_btnMesEneroActionPerformed
+
+    private void btnMesFebreroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesFebreroActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Febrero");
+    }//GEN-LAST:event_btnMesFebreroActionPerformed
+
+    private void btnMesMarzoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesMarzoActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Marzo");
+    }//GEN-LAST:event_btnMesMarzoActionPerformed
+
+    private void btnMesAbrilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesAbrilActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Abril");
+    }//GEN-LAST:event_btnMesAbrilActionPerformed
+
+    private void btnMesMayoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesMayoActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Mayo");
+    }//GEN-LAST:event_btnMesMayoActionPerformed
+
+    private void btnMesJunioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesJunioActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Junio");
+    }//GEN-LAST:event_btnMesJunioActionPerformed
+
+    private void btnMesJulioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesJulioActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Julio");
+    }//GEN-LAST:event_btnMesJulioActionPerformed
+
+    private void btnMesAgostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesAgostoActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Agosto");
+    }//GEN-LAST:event_btnMesAgostoActionPerformed
+
+    private void btnMesSeptiembreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesSeptiembreActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Septiembre");
+    }//GEN-LAST:event_btnMesSeptiembreActionPerformed
+
+    private void btnMesOctubreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesOctubreActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Octubre");
+    }//GEN-LAST:event_btnMesOctubreActionPerformed
+
+    private void btnMesNoviembreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesNoviembreActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Noviembre");
+    }//GEN-LAST:event_btnMesNoviembreActionPerformed
+
+    private void btnMesDiciembreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesDiciembreActionPerformed
+        // TODO add your handling code here:
+        AgregarMes("Diciembre");
+    }//GEN-LAST:event_btnMesDiciembreActionPerformed
+
+    private void btnQuitarMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarMesActionPerformed
+        // TODO add your handling code here:
+        String texto = txtMesMensualidad.getText().trim(); // Obtener texto sin espacios finales
+
+    // Dividir por saltos de línea
+        String[] lineas = texto.split("\n");
+
+    // Si hay al menos una línea, eliminar la última
+        if (lineas.length > 0) {
+            StringBuilder nuevoTexto = new StringBuilder();
+            for (int i = 0; i < lineas.length - 1; i++) {
+                nuevoTexto.append(lineas[i]).append("\n");
+            }
+            txtMesMensualidad.setText(nuevoTexto.toString());
+            TotalPago();
+        }
+    }//GEN-LAST:event_btnQuitarMesActionPerformed
+
+    private void btnCancelarPagoMenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPagoMenActionPerformed
+        // TODO add your handling code here:
+        connection = con.establecerConexion();
+        String numero = JOptionPane.showInputDialog("Ingresa el numero de comprobante de pago:");
+        int NoMensualidad = Integer.parseInt(numero); // convertir de String a int
+        try {
+            String qry = "Delete From PagosMensualidad where NoFacturaMensualidad = ?";
+            ps = connection.prepareStatement(qry);
+            ps.setInt(1, NoMensualidad);
+            int filasAfectadas = ps.executeUpdate();
+            
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Pago cancelado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro ningun pago con ese numero.");
+            }
+            
+            ps.close();
+            connection.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
+        }
+    }//GEN-LAST:event_btnCancelarPagoMenActionPerformed
 
     private void CamposPagos(){
         CardLayout cardLayout = (CardLayout) PanelContenedor.getLayout();
@@ -775,7 +1069,7 @@ public class Pagos extends javax.swing.JFrame {
         txtmontoMensualidad.setText("");
         txtNoFacturaMen.setText("");
         txtfechaMensualidad.setText("");
-        txtmesMensualidad.setText("");
+        txtMesMensualidad.setText("");
         VerificarFecha(txtfechaMensualidad);
     }
     
@@ -812,6 +1106,93 @@ public class Pagos extends javax.swing.JFrame {
                 NoFacturaNuevo = NoFactura + 1;
                 NoFacturaTexto = String.valueOf(NoFacturaNuevo);
                 txtNoFacturaMen.setText(NoFacturaTexto);
+            }
+
+            rs.close();
+            ps.close();
+            connection.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
+        }
+    }
+    
+    private void GestionPagos(String TipoPago, JTextField Campo){
+        connection = con.establecerConexion();
+        int Monto;
+        String MontoTexto;
+        try {
+            String qry = "Select Cantidad from GestionPagos where TipoPago = ?";
+            ps = connection.prepareStatement(qry);
+            ps.setString(1, TipoPago);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                Monto = rs.getInt("Cantidad");
+                MontoTexto = String.valueOf(Monto);
+                Campo.setText(MontoTexto); // Lo mostramos en el JTextField
+            }
+
+            rs.close();
+            ps.close();
+            connection.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar: " + e.toString());
+        }
+    }
+    
+    private void AgregarMes(String txtMes){
+        
+        int Carnet = Integer.parseInt(txtCarnetBuscar.getText().trim());
+        connection = con.establecerConexion();
+        try {
+        // Consulta para ver si ya se registró ese mes
+            String qry = "SELECT COUNT(*) FROM PagosMensualidad WHERE Carnet = ? AND Mes LIKE ?";
+            ps = connection.prepareStatement(qry);
+            ps.setInt(1, Carnet);
+            ps.setString(2, "%" + txtMes + "%");
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(null, "El mes '" + txtMes + "' ya ha sido registrado.");
+            }else{
+                txtMesMensualidad.append(txtMes + "\n");
+                TotalPago();
+            }
+
+            rs.close();
+            ps.close();
+            connection.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al consultar la base de datos.");
+            e.printStackTrace();
+        }
+        
+    }
+    
+    private void TotalPago(){
+        
+        connection = con.establecerConexion();
+        int Monto;
+        String MontoTexto;
+        
+        String TipoPago = "Mensualidad";
+        
+        try {
+            String qry = "Select Cantidad from GestionPagos where TipoPago = ?";
+            ps = connection.prepareStatement(qry);
+            ps.setString(1, TipoPago);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                Monto = rs.getInt("Cantidad");
+                String texto = txtMesMensualidad.getText().trim();
+                String[] meses = texto.isEmpty() ? new String[0] : texto.split("\\n");
+                int cantidadMeses = meses.length;
+                int total = cantidadMeses * Monto;
+                txtmontoMensualidad.setText(String.valueOf(total));
             }
 
             rs.close();
@@ -864,17 +1245,31 @@ public class Pagos extends javax.swing.JFrame {
     private javax.swing.JPanel PanelContenedor;
     private javax.swing.JButton btnCancelarInscripcion;
     private javax.swing.JButton btnCancelarMensualidad;
+    private javax.swing.JButton btnCancelarPagoMen;
     private javax.swing.JButton btnCancelarUniforme;
     private javax.swing.JButton btnImprimirInscripcion;
     private javax.swing.JButton btnInscripcion;
     private javax.swing.JButton btnMensualidad;
+    private javax.swing.JButton btnMesAbril;
+    private javax.swing.JButton btnMesAgosto;
+    private javax.swing.JButton btnMesDiciembre;
+    private javax.swing.JButton btnMesEnero;
+    private javax.swing.JButton btnMesFebrero;
+    private javax.swing.JButton btnMesJulio;
+    private javax.swing.JButton btnMesJunio;
+    private javax.swing.JButton btnMesMarzo;
+    private javax.swing.JButton btnMesMayo;
+    private javax.swing.JButton btnMesNoviembre;
+    private javax.swing.JButton btnMesOctubre;
+    private javax.swing.JButton btnMesSeptiembre;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnNuevoUniforme;
     private javax.swing.JButton btnPagarInscripcion;
     private javax.swing.JButton btnPagarMensualidad;
     private javax.swing.JButton btnPagarUniforme;
+    private javax.swing.JButton btnQuitarMes;
     private javax.swing.JButton btnUniforme;
     private javax.swing.JButton btnValidarMen;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -889,21 +1284,22 @@ public class Pagos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField txtCarnetBuscar;
     private javax.swing.JTextField txtCarnetIns;
+    private javax.swing.JTextArea txtMesMensualidad;
     private javax.swing.JTextField txtNoFacturaIns;
     private javax.swing.JTextField txtNoFacturaMen;
     private javax.swing.JTextField txtNoFacturaUni;
@@ -911,7 +1307,6 @@ public class Pagos extends javax.swing.JFrame {
     private javax.swing.JTextField txtfechaInscripcion;
     private javax.swing.JTextField txtfechaMensualidad;
     private javax.swing.JTextField txtfechaUniforme;
-    private javax.swing.JTextField txtmesMensualidad;
     private javax.swing.JTextField txtmontoInscripcion;
     private javax.swing.JTextField txtmontoMensualidad;
     private javax.swing.JTextField txtmontoUniforme;
